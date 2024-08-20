@@ -26,3 +26,25 @@ SELECT e.id, e.name,  e.yearsofexp,
     (e.yearsofexp / total.total_experience) * bonus_sum.b_s AS b_salary
 FROM 
     employees e,total_exp total,bonus_sum;
+	
+
+-----------------------------------------------------------------------------
+WITH total_exp AS (
+    SELECT SUM(yearsofexp) AS total_experience 
+    FROM employees
+),
+bonus_sum AS (
+    SELECT SUM(bonus) AS b_s 
+    FROM bonuses
+)
+SELECT 
+    e.id, 
+    e.name,  
+    e.yearsofexp, 
+    (CAST(e.yearsofexp AS DECIMAL(18, 2)) / total.total_experience) * bonus_sum.b_s AS b_salary
+FROM 
+    employees e,
+    total_exp total,
+    bonus_sum;
+	
+	
