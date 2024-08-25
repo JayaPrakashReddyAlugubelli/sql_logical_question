@@ -47,10 +47,9 @@ ordered by the total count of orders in descending order.
 
 --solution 
 
-SELECT city,count(order_id) as total_orders
+SELECT TOP 1 city, COUNT(order_id) AS total_orders
 FROM restaurant_orders
 WHERE city IN ('Delhi', 'Mumbai', 'Bangalore', 'Hyderabad')
 AND order_date BETWEEN '2021-09-01' AND '2021-09-30'
 GROUP BY city
-ORDER BY total_orders DESC
-LIMIT 1;
+ORDER BY total_orders DESC;

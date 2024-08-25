@@ -32,4 +32,10 @@ output:
 
 ---solution 
 
-SELECT EmpName,GROUP_CONCAT(Skill) FROM EmployeeSkills GROUP BY EmpName;
+SELECT 
+    EmpName, 
+    STRING_AGG(Skill, ', ') AS Skills
+FROM 
+    EmployeeSkills
+GROUP BY 
+    EmpName;

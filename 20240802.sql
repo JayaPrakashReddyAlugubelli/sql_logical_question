@@ -37,8 +37,16 @@ INSERT INTO UserDetails (user_id, age, gender, occupation, zip_code) VALUES
 */
 
 --my solution 
-SELECT occupation,
-(SUM(male) / COUNT(gender))*100 AS male_ratio ,
-SUM(female)/COUNT(gender) * 100 AS female_ratio FROM 
-(SELECT occupation ,gender,case when  gender='M' then 1 ELSE 0 end AS male ,
-case when gender='F' then 1 ELSE 0 end AS female FROM UserDetails) AS k GROUP BY occupation ;
+SELECT 
+    occupation,
+    (SUM(male) * 100.0 / COUNT(gender)) AS male_ratio,
+    (SUM(female) * 100.0 / COUNT(gender)) AS female_ratio
+FROM (
+    SELECT 
+        occupation,
+        gender,
+        CASE WHEN gender = 'M' THEN 1 ELSE 0 END AS male,
+        CASE WHEN gender = 'F' THEN 1 ELSE 0 END AS female
+    FROM UserDetails
+) AS k
+GROUP BY occupation;

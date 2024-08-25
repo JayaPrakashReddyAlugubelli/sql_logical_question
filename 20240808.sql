@@ -1,8 +1,8 @@
 CREATE TABLE order_details (
     order_id INT,
     del_partner VARCHAR(255),
-    predicted_time TIMESTAMP,
-    delivery_time TIMESTAMP
+    predicted_time DATETIME,
+    delivery_time DATETIME
 );
 
 

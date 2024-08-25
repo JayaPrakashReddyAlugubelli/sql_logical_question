@@ -23,5 +23,6 @@ Sql query to schedule a match between each teams
 */
 
 -----my solution ---
-SELECT a.TeamName ,"vs",b.TeamName FROM CricketTeams a 
-INNER JOIN CricketTeams b ON a.TeamName < b.TeamName   ;
+SELECT a.TeamName + ' vs ' + b.TeamName AS Matchup
+FROM CricketTeams a
+INNER JOIN CricketTeams b ON a.TeamName < b.TeamName;

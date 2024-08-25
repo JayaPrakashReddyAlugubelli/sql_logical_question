@@ -22,8 +22,6 @@ VALUES (0, 0, 'Start', 0.712),
 
 
 
-
-
 WITH CTE AS (
     SELECT
         MachineId,

@@ -36,10 +36,10 @@ WITH test AS (
     SELECT user1, COUNT(*) AS user_counts
     FROM (
         SELECT user1, user2 FROM user_relationships
-        UNION 
+        UNION ALL
         SELECT user2, user1 FROM user_relationships
     ) AS k
     GROUP BY user1
 )
-SELECT user1, ROUND((user_counts / (SELECT COUNT(*) FROM test)) * 100, 2) AS friends_ratio
+SELECT user1, ROUND((CAST(user_counts AS FLOAT) / (SELECT COUNT(*) FROM test)) * 100, 2) AS friends_ratio
 FROM test;

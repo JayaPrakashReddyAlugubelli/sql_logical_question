@@ -19,7 +19,7 @@ INSERT INTO stock_predictions (stockid, prediction_1, prediction_2, prediction_3
 VALUES ('INFY', 1001, 902, 1000, 990, 1230, 1100, 1200);
 
 
-/*find out max value and min value and difeerent between max ,min */
+/*find out max value and min value and different  between max ,min */
 
 WITH test AS (
 SELECT *,GREATEST(prediction_1,prediction_2,prediction_3,prediction_4,prediction_5,prediction_6,prediction_7 ) AS maxv ,
