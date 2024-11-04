@@ -24,3 +24,5 @@ OUTER APPLY (
       AND b2.category IS NOT NULL
     ORDER BY b2.brand_name
 ) prev_categories;
+
+---Deloitte SQL Interview Question | BIG 4 | Forward Filling | Deepankar Pathak
