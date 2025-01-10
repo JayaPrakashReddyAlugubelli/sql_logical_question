@@ -39,3 +39,7 @@ FROM
     EmployeeSkills
 GROUP BY 
     EmpName;
+
+
+---mysql
+SELECT EmpName,GROUP_CONCAT(Skill) from EmployeeSkills GROUP BY EmpName;
