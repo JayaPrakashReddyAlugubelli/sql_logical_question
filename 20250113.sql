@@ -24,6 +24,10 @@ INSERT INTO emp (id, name, salary, dept) VALUES
 
 
 output:-
-WITH cte as (
-SELECT *,DENSE_RANK() OVER(PARTITION BY dept ORDER BY salary desc) AS dn FROM emp)
-SELECT dn,SUM(salary) FROM  cte GROUP BY dn;
+WITH RankedSalaries AS (
+    SELECT salary, DENSE_RANK() OVER (ORDER BY salary DESC) AS rank
+    FROM emp
+)
+SELECT SUM(salary) AS sum_2nd_3rd_highest
+FROM RankedSalaries
+WHERE rank IN (2, 3);
