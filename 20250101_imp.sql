@@ -27,3 +27,9 @@ WITH
 SELECT seat_id
 FROM T
 WHERE a = 2 OR b = 2;
+
+-----
+WITH cte AS (
+SELECT *, seat_id -ROW_NUMBER() OVER(ORDER BY seat_id) AS rn FROM cinema_tbl WHERE free=1),
+cte_2 AS (SELECT rn FROM cte GROUP BY rn HAVING COUNT(*) >=2)
+SELECT seat_id FROM cte WHERE rn IN (SELECT * FROM cte_2 )

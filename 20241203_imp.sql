@@ -50,3 +50,9 @@ FROM (
     FROM UserDetails
 ) AS k
 GROUP BY occupation;
+
+
+-----------
+SELECT occupation, (SUM(case when gender="M" then 1 ELSE 0 END) / COUNT(gender))*100 as male_ratio ,
+(SUM(case when gender="F" then 1 ELSE 0 END) / COUNT(gender))*100 as female_ratio
+FROM userdetails GROUP BY occupation;
