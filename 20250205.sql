@@ -1,47 +1,32 @@
-write a sql query to find lowest and highest salary emp in each dept
-drop table emp;
-CREATE TABLE emp (
-    id INT,
-    emp_name VARCHAR(20),
-    gender VARCHAR(10),
-    dept VARCHAR(20),
-    salary INT
+Problem Statement:- Transatcion_tbl Table has four columns CustID, TranID, TranAmt, and  TranDate. User has to display all these fields along with maximum TranAmt for each CustID and ratio of TranAmt and maximum TranAmt for each transaction.
+
+
+CREATE TABLE Transaction_Tbl (
+  CustID INT,
+  TranID INT,
+  TranAmt FLOAT,
+  TranDate DATE
 );
 
-INSERT INTO emp VALUES 
-(1, 'Tildie', 'Female', 'Support', 1676),
-(2, 'Averil', 'Female', 'Engineering', 1572),
-(3, 'Matthiew', 'Male', 'Engineering', 1477),
-(4, 'Reinald', 'Male', 'Services', 1877),
-(5, 'Karola', 'Genderqueer', 'Marketing', 1029),
-(6, 'Manon', 'Genderfluid', 'Research and Development', 1729),
-(7, 'Tabbie', 'Female', 'Research and Development', 1000),
-(8, 'Corette', 'Female', 'Marketing', 1624),
-(9, 'Edward', 'Male', 'Accounting', 1157),
-(10, 'Philipa', 'Female', 'Human Resources', 1992),
-(11, 'Ingeberg', 'Female', 'Services', 1515),
-(12, 'Kort', 'Male', 'Support', 1005),
-(13, 'Shelby', 'Male', 'Product Management', 1020),
-(14, 'Shelden', 'Male', 'Legal', 1354),
-(15, 'Sonya', 'Female', 'Marketing', 1321);
+INSERT INTO Transaction_Tbl (CustID, TranID, TranAmt, TranDate) VALUES (1001, 20001, 10000, '2020-04-25');
+INSERT INTO Transaction_Tbl (CustID, TranID, TranAmt, TranDate) VALUES (1001, 20002, 15000, '2020-04-25');
+INSERT INTO Transaction_Tbl (CustID, TranID, TranAmt, TranDate) VALUES (1001, 20003, 80000, '2020-04-25');
+INSERT INTO Transaction_Tbl (CustID, TranID, TranAmt, TranDate) VALUES (1001, 20004, 20000, '2020-04-25');
+INSERT INTO Transaction_Tbl (CustID, TranID, TranAmt, TranDate) VALUES (1002, 30001, 7000, '2020-04-25');
+INSERT INTO Transaction_Tbl (CustID, TranID, TranAmt, TranDate) VALUES (1002, 30002, 15000, '2020-04-25');
+INSERT INTO Transaction_Tbl (CustID, TranID, TranAmt, TranDate) VALUES (1002, 30003, 22000, '2020-04-25');
 
+o/p:-
 
-with cte AS (SELECT * ,DENSE_RANK() OVER(PARTITION BY dept ORDER BY salary desc) AS hs,
- DENSE_RANK() OVER(PARTITION BY dept ORDER BY salary asc) AS ls from emp)
- SELECT dept,
- max(case when hs=1 then emp_name END) AS hs,
- max(case when ls=1 then emp_name END) AS ls FROM cte WHERE hs=1 OR ls=1 GROUP BY dept 
- 
-+-------------------------+------------------+------------------+
-|          dept           |        hs        |        ls        |
-+-------------------------+------------------+------------------+
-| Accounting              | Edward           | Edward           |
-| Engineering             | Averil           | Matthiew         |
-| Human Resources         | Philipa          | Philipa          |
-| Legal                   | Shelden          | Shelden          |
-| Marketing               | Corette          | Karola           |
-| Product Management      | Shelby           | Shelby           |
-| Research and Development| Manon            | Tabbie           |
-| Services                | Reinald          | Ingeberg         |
-| Support                 | Tildie           | Kort             |
-+-------------------------+------------------+------------------+
+SELECT CustID, TranID, TranAmt ,MAX(TranAmt) OVER(PARTITION BY CustID) AS MaxTranAmt,ROUND( (TranAmt/MAX(TranAmt) OVER(PARTITION BY CustID)),3) AS ratio,TranDate FROM Transaction_Tbl
++--------+--------+---------+-----------+-------+------------+
+| CustID | TranID | TranAmt | MaxTranAmt | ratio | TranDate   |
++--------+--------+---------+-----------+-------+------------+
+| 1001   | 20001  | 10000   | 80000     | 0.125 | 2020-04-25 |
+| 1001   | 20002  | 15000   | 80000     | 0.188 | 2020-04-25 |
+| 1001   | 20003  | 80000   | 80000     | 1     | 2020-04-25 |
+| 1001   | 20004  | 20000   | 80000     | 0.25  | 2020-04-25 |
+| 1002   | 30001  | 7000    | 22000     | 0.318 | 2020-04-25 |
+| 1002   | 30002  | 15000   | 22000     | 0.682 | 2020-04-25 |
+| 1002   | 30003  | 22000   | 22000     | 1     | 2020-04-25 |
++--------+--------+---------+-----------+-------+------------+
